@@ -16,7 +16,7 @@ void dfs(int x, int y, vector<int> &ve, int color[]) {
 	int root = x*6+y;
 	ve.push_back(root);
 	
-	//color[root] = 1;
+	color[root] = 1;
 
 	if (tag || ve.size() == 30) {
 		tag = 1;
@@ -30,37 +30,39 @@ void dfs(int x, int y, vector<int> &ve, int color[]) {
 		
 		int value = xx*6 + yy;
 
-		if (xx < 5 && xx >= 0 && yy < 6 && yy >= 0 && !color[value]) {	
-			color[value] = 1;
+		if (xx < 5 && xx >= 0 && yy <= 6 && yy > 0 && !color[value]) {	
+			//color[value] = 1;
 			dfs(xx,yy,ve,color);
-			color[value] = 0;
+			//color[value] = 0;
 		}
 	}
 	if (tag)
 		return;
-	//color[root] = 0;
+	color[root] = 0;
 	ve.pop_back();
 }
 
 int main () {
 	int n;
-	cin >> n;
 
-	vector<int>ve;
-	int color[31] = {0};
-	int x = (n-1) / 6;
-	int y = n- x*6;
-	color[n] = 1;
-	dfs(x, y,ve,color);
-	if (ve.size() < 30) {
-		cout << "-1";
-	}
-	else {
-
-		cout << ve[0];
-		for (int i = 1; i < ve.size(); i++) {
-			cout << " "<< ve[i] + 1;
+	while(cin >> n && n != -1) {
+		tag = 0;
+		vector<int>ve;
+		int color[31] = {0};
+		int x = (n-1) / 6;
+		int y = n- x*6;
+		color[n] = 1;
+		dfs(x, y,ve,color);
+		if (ve.size() < 30) {
+			cout << "-1";
 		}
+		else {
+
+			cout << ve[0];
+			for (int i = 1; i < ve.size(); i++) {
+				cout << " "<< ve[i];
+			}
+		}
+		cout << endl;
 	}
-	cout << endl;
 }
