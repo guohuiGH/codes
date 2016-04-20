@@ -13,24 +13,23 @@ int tag = 0;
 int po[8][2] = {-2,-1, -2,1, -1,-2, -1,2, 1,-2, 1,2, 2,-1, 2,1};
 
 void dfs(int x, int y, vector<int> &ve, int color[]) {
-	int root = x*6+y;
+	int root = x*8+y;
 	ve.push_back(root);
 	
 	color[root] = 1;
 
-	if (tag || ve.size() == 30) {
+	if (tag || ve.size() == 64) {
 		tag = 1;
 		return;
 	}
-
 
 	for (int i = 0; i < 8; i++) {
 		int xx = x + po[i][0];
 		int yy = y + po[i][1];
 		
-		int value = xx*6 + yy;
+		int value = xx*8 + yy;
 
-		if (xx < 5 && xx >= 0 && yy <= 6 && yy > 0 && !color[value]) {	
+		if (xx < 8 && xx >= 0 && yy <= 8 && yy > 0 && !color[value]) {	
 			//color[value] = 1;
 			dfs(xx,yy,ve,color);
 			//color[value] = 0;
@@ -48,12 +47,13 @@ int main () {
 	while(cin >> n && n != -1) {
 		tag = 0;
 		vector<int>ve;
-		int color[31] = {0};
-		int x = (n-1) / 6;
-		int y = n- x*6;
+
+		int color[65] = {0};
+		int x = (n-1) / 8;
+		int y = n- x*8;
 		color[n] = 1;
 		dfs(x, y,ve,color);
-		if (ve.size() < 30) {
+		if (ve.size() < 64) {
 			cout << "-1";
 		}
 		else {
